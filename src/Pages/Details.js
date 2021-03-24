@@ -15,9 +15,11 @@ export default function Details(props) {
 
   const [Data, setData] = useState();
 
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/getdetails?` + queryString.stringify(obj))
+      .get(`${url}/getdetails?` + queryString.stringify(obj))
       .then((res) => {
         setData(res.data);
         console.log(Data);

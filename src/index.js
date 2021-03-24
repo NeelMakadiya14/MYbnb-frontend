@@ -30,7 +30,7 @@ const Connect = () => {
     console.log(authCookie);
     setCookie("userCookie", authCookie);
 
-    axios.post(`http://localhost:5000/adduser`, authCookie).then((res) => {
+    axios.post(`${url}/adduser`, authCookie).then((res) => {
       console.log(res);
     });
 

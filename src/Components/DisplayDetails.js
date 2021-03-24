@@ -56,6 +56,8 @@ export default function DisplayDetails(props) {
   const cookies = new Cookies();
   const userCookie = cookies.get("userCookie");
 
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   const obj = {
     listing_id: props.data._id,
     total_price:
@@ -68,12 +70,10 @@ export default function DisplayDetails(props) {
   };
 
   const booking = () => {
-    axios
-      .post(`http://localhost:5000/booking?email=${userCookie.email}`, obj)
-      .then((res) => {
-        console.log(res);
-        setOpen(true);
-      });
+    axios.post(`${url}/booking?email=${userCookie.email}`, obj).then((res) => {
+      console.log(res);
+      setOpen(true);
+    });
   };
 
   function Alert(props) {
@@ -117,7 +117,10 @@ export default function DisplayDetails(props) {
               {props.data.description}
             </Typography>
           </Grid>
-          <Divider />
+          <Grid item xs={12}>
+            <Divider style={{ marginTop: "2%" }} />
+          </Grid>
+
           <Grid item xs={8}>
             {props.data.space ? (
               <div>
@@ -239,11 +242,71 @@ export default function DisplayDetails(props) {
                     }`}
                   </Typography>
                 </Grid>
-                <Button color="primary" onClick={booking}>
+                <Button variant="contained" color="primary" onClick={booking}>
                   Book
                 </Button>
               </Grid>
             </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider style={{ marginBottom: "2%" }} />
+          </Grid>
+          <Grid xs={6}>
+            <Grid container justify="center" alignItems="center">
+              <Grid item xs={12}>
+                <Typography variant="h5" color="inherit" gutterBottom>
+                  Host Details :
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1" color="inherit">
+                  {`\u2022 Name : ${props.data.host.host_name}`}
+                </Typography>
+                <Typography variant="body1" color="inherit">
+                  {`\u2022 Response Time : ${props.data.host.host_response_time}`}
+                </Typography>
+                <Typography variant="body1" color="inherit">
+                  {`\u2022 Location : ${props.data.host.host_location}`}
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Divider style={{ margin: "2%" }} />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h5" color="inherit" gutterBottom>
+                  Address :
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="body1" color="inherit">
+                  {props.data.address.street}
+                </Typography>
+                <Typography variant="body1" color="inherit">
+                  {props.data.address.government_area}
+                </Typography>
+                <Typography variant="body1" color="inherit">
+                  {`${props.data.address.market} , ${props.data.address.country}`}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid xs={6}>
+            <Grid item xs={12}>
+              <Typography variant="h5" color="inherit" gutterBottom>
+                Amenities :
+              </Typography>
+            </Grid>
+            <Grid container>
+              {props.data.amenities.map((val, inx) => {
+                return (
+                  <Grid item xs={4} key={inx}>
+                    <Typography variant="body1" color="inherit" gutterBottom>
+                      {`\u2022 ${val}`}
+                    </Typography>
+                  </Grid>
+                );
+              })}
+            </Grid>
           </Grid>
         </Grid>
       </Paper>

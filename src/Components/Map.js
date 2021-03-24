@@ -13,7 +13,7 @@ const Map = ({ listingData, history, info }) => {
   return (
     <div display="flex" style={{ height: "100vh", width: "100%", flex: 1 }}>
       <GoogleMap
-        bootstrapURLKeys={{ key: REACT_APP_MAP_API }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_API }}
         defaultCenter={temp}
         defaultZoom={15}
       >

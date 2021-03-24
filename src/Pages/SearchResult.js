@@ -12,15 +12,15 @@ export default function SearchResult(props) {
 
   obj = { ...obj, location_name };
 
+  const url = process.env.REACT_APP_BACKEND_URL;
+
   console.log(obj);
 
   const [listingData, setListingData] = useState();
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:5000/available_house?` + queryString.stringify(obj)
-      )
+      .get(`${url}/available_house?` + queryString.stringify(obj))
       .then((res) => {
         setListingData(res.data);
       })

@@ -15,9 +15,13 @@ import {
   TextField,
   FormControl,
 } from "@material-ui/core";
-import moment from "moment";
+import { Cookies } from "react-cookie";
 
 export default function Home(props) {
+  const cookies = new Cookies();
+  const userCookie = cookies.get("userCookie");
+  const email = userCookie.email;
+
   return (
     <div>
       <Grid
@@ -35,6 +39,16 @@ export default function Home(props) {
         <Grid item xs={1}></Grid>
 
         <Grid xs={3} container justify="center" alignItems="center">
+          <button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              props.history.push(`/mybookings/${email}`);
+            }}
+            style={{ margin: "3%" }}
+          >
+            My Bookings
+          </button>
           <Formik
             initialValues={{
               location: "",
