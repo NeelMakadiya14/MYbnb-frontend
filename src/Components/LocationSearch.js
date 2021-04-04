@@ -3,12 +3,7 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
-// function sleep(delay = 0) {
-//   return new Promise((resolve) => {
-//     setTimeout(resolve, delay);
-//   });
-// }
+const url = process.env.REACT_APP_BACKEND_URL;
 
 export default function LocationSearch(props) {
   const [open, setOpen] = React.useState(false);
@@ -23,10 +18,12 @@ export default function LocationSearch(props) {
       return undefined;
     }
 
+    const url = process.env.REACT_APP_BACKEND_URL;
+
     (async () => {
       var option;
       axios
-        .get(`http://localhost:5000/location_list?name=${inputValue}`)
+        .get(`${url}/location_list?name=${inputValue}`)
         .then((res) => {
           option = res.data;
           console.log(option);
@@ -37,13 +34,6 @@ export default function LocationSearch(props) {
         .catch((err) => {
           console.error(err);
         });
-      //   const response = await fetch(
-
-      //   );
-      //   //  await sleep(30); // For demo purposes.
-      //   console.log(response);
-      //   const countries = await response.json();
-      //   console.log(countries);
     })();
 
     return () => {
@@ -68,7 +58,8 @@ export default function LocationSearch(props) {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, value) => {
+      getOptionSelected={(option, value) => option === value}
+      onChange={(event, value) => {
         console.log("option : ", value);
         props.setFieldValue("location", value);
       }}
