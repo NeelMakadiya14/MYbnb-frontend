@@ -16,6 +16,7 @@ import {
   FormControl,
 } from "@material-ui/core";
 import { Cookies } from "react-cookie";
+import LocationSearch from "../Components/LocationSearch";
 
 export default function Home(props) {
   const cookies = new Cookies();
@@ -100,7 +101,11 @@ export default function Home(props) {
                           </Typography>
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField
+                          <LocationSearch
+                            values={values}
+                            setFieldValue={setFieldValue}
+                          />
+                          {/* <TextField
                             id="location"
                             name="location"
                             label="Location (Anywhere)"
@@ -108,7 +113,7 @@ export default function Home(props) {
                             value={values.location}
                             onChange={handleChange}
                             onBlur={handleBlur}
-                          />
+                          /> */}
                         </Grid>
                         <Grid item xs={6}>
                           <TextField
